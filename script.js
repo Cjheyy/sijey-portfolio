@@ -145,41 +145,21 @@ animatedElements.forEach(el => {
 // ===== Contact Form Handling =====
 const contactForm = document.getElementById('contactForm');
 
-contactForm.addEventListener('submit', async (e) => {
+contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
     // Get form values
-    const formData = new FormData(contactForm);
-    const submitButton = contactForm.querySelector('button[type="submit"]');
-    const originalButtonText = submitButton.innerHTML;
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value;
     
-    // Disable button and show loading state
-    submitButton.disabled = true;
-    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    // Here you would typically send the form data to a server
+    // For now, we'll just show an alert
+    alert(`Thank you, ${name}! Your message has been received. I'll get back to you soon at ${email}.`);
     
-    try {
-        // Send form data to PHP handler
-        const response = await fetch('contact-handler.php', {
-            method: 'POST',
-            body: formData
-        });
-        
-        const result = await response.json();
-        
-        if (result.success) {
-            alert(result.message || 'Thank you! Your message has been sent successfully.');
-            contactForm.reset();
-        } else {
-            alert(result.message || 'Sorry, there was an error. Please try again.');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Sorry, there was an error sending your message. Please try again later.');
-    } finally {
-        // Re-enable button
-        submitButton.disabled = false;
-        submitButton.innerHTML = originalButtonText;
-    }
+    // Reset form
+    contactForm.reset();
 });
 
 // ===== Typing Effect for Hero Section (Optional Enhancement) =====
